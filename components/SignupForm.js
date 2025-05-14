@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Alert, TouchableOpacity, CheckBox, ScrollView } from 'react-native';
+import { View, TextInput, Text, StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native';
+import CheckBox from 'expo-checkbox';
 
 export default function SignupForm({ role, goToLogin }) {
   const [fields, setFields] = useState({
@@ -78,83 +79,77 @@ export default function SignupForm({ role, goToLogin }) {
 
   return (
     <ScrollView contentContainerStyle={styles.form}>
-      <View style={styles.row}>
-        <TextInput
-          style={[styles.input, styles.inputHalf]}
-          placeholder="Phone Number *"
-          value={fields.phone}
-          onChangeText={v => setFields(f => ({ ...f, phone: v }))}
-          keyboardType="phone-pad"
-        />
-        <TextInput
-          style={[styles.input, styles.inputHalf]}
-          placeholder="Email"
-          value={fields.email}
-          onChangeText={v => setFields(f => ({ ...f, email: v }))}
-          keyboardType="email-address"
-        />
-      </View>
-      <View style={styles.row}>
-        <TextInput
-          style={[styles.input, styles.inputHalf]}
-          placeholder="First Name *"
-          value={fields.firstName}
-          onChangeText={v => setFields(f => ({ ...f, firstName: v }))}
-        />
-        <TextInput
-          style={[styles.input, styles.inputHalf]}
-          placeholder="Last Name *"
-          value={fields.lastName}
-          onChangeText={v => setFields(f => ({ ...f, lastName: v }))}
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="Phone Number *"
+        value={fields.phone}
+        onChangeText={v => setFields(f => ({ ...f, phone: v }))}
+        keyboardType="phone-pad"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={fields.email}
+        onChangeText={v => setFields(f => ({ ...f, email: v }))}
+        keyboardType="email-address"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="First Name *"
+        value={fields.firstName}
+        onChangeText={v => setFields(f => ({ ...f, firstName: v }))}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Last Name *"
+        value={fields.lastName}
+        onChangeText={v => setFields(f => ({ ...f, lastName: v }))}
+      />
       {role === 'parent' ? (
-        <View style={styles.row}>
+        <>
           <TextInput
-            style={[styles.input, styles.inputHalf]}
+            style={styles.input}
             placeholder="Relationship with Child *"
             value={fields.relationship}
             onChangeText={v => setFields(f => ({ ...f, relationship: v }))}
           />
           <TextInput
-            style={[styles.input, styles.inputHalf]}
+            style={styles.input}
             placeholder="Address"
             value={fields.address}
             onChangeText={v => setFields(f => ({ ...f, address: v }))}
           />
-        </View>
+        </>
       ) : (
-        <View style={styles.row}>
+        <>
           <TextInput
-            style={[styles.input, styles.inputHalf]}
+            style={styles.input}
             placeholder="Clinic Name *"
             value={fields.clinicName}
             onChangeText={v => setFields(f => ({ ...f, clinicName: v }))}
           />
           <TextInput
-            style={[styles.input, styles.inputHalf]}
+            style={styles.input}
             placeholder="Specialization *"
             value={fields.specialization}
             onChangeText={v => setFields(f => ({ ...f, specialization: v }))}
           />
-        </View>
+        </>
       )}
-      <View style={styles.row}>
-        <TextInput
-          style={[styles.input, styles.inputHalf]}
-          placeholder="Password *"
-          value={fields.password}
-          onChangeText={v => setFields(f => ({ ...f, password: v }))}
-          secureTextEntry
-        />
-        <TextInput
-          style={[styles.input, styles.inputHalf]}
-          placeholder="Confirm Password *"
-          value={fields.confirmPassword}
-          onChangeText={v => setFields(f => ({ ...f, confirmPassword: v }))}
-          secureTextEntry
-        />
-      </View>
+      <TextInput
+        style={styles.input}
+        placeholder="Password *"
+        value={fields.password}
+        onChangeText={v => setFields(f => ({ ...f, password: v }))}
+        secureTextEntry
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirm Password *"
+        value={fields.confirmPassword}
+        onChangeText={v => setFields(f => ({ ...f, confirmPassword: v }))}
+        secureTextEntry
+      />
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <TouchableOpacity
         style={[styles.signupBtn, !agree && { backgroundColor: '#aaa' }]}
@@ -164,7 +159,7 @@ export default function SignupForm({ role, goToLogin }) {
         <Text style={styles.signupBtnText}>Sign Up</Text>
       </TouchableOpacity>
       <View style={styles.checkboxRow}>
-        <CheckBox value={agree} onValueChange={setAgree} />
+        <CheckBox value={agree} onValueChange={setAgree} color={agree ? '#007AFF' : undefined} />
         <Text style={styles.termsText}>I agree to the <Text style={{ color: '#007AFF' }}>Terms & Conditions</Text></Text>
       </View>
       <Text style={styles.loginText}>
@@ -181,7 +176,15 @@ export default function SignupForm({ role, goToLogin }) {
 const styles = StyleSheet.create({
   form: { width: '100%', alignItems: 'center', paddingBottom: 20 },
   row: { flexDirection: 'row', justifyContent: 'space-between', width: '100%' },
-  input: { borderWidth: 1, borderColor: '#ccc', marginBottom: 10, padding: 10, borderRadius: 4, backgroundColor: '#f5f8fa' },
+  input: { 
+    borderWidth: 1, 
+    borderColor: '#ccc', 
+    marginBottom: 10, 
+    padding: 10, 
+    borderRadius: 4, 
+    backgroundColor: '#f5f8fa', 
+    width: 300 // Set a fixed width in pixels for consistency across devices
+  },
   inputHalf: { width: '48%' },
   error: { color: 'red', marginBottom: 10, alignSelf: 'flex-start' },
   signupBtn: { backgroundColor: '#888', borderRadius: 4, width: '100%', padding: 12, alignItems: 'center', marginTop: 10, marginBottom: 10 },
